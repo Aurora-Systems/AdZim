@@ -1,0 +1,39 @@
+body{
+  margin:0px;
+  padding: 0px;
+  font-family: 'Epilogue', sans-serif;
+}
+
+.page{
+  height: 90vh;
+  padding: 0px;
+  margin: 0px;
+}
+
+.searchbar{
+  width: 70vw;
+  height: 50px;
+}
+
+.gradText{
+    background: -webkit-linear-gradient(#523ccd, #fda25e);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.linkBox:hover{
+  transition: 0.5s;
+  border-radius: 7px;
+  background-color: #e9f5f8;
+
+}
+
+.btnPrimary{
+  background-color: #e9f5f8;
+}
+
+.btnPrimary:hover{
+  color:white;
+  background-color: #6852c8;
+}
+
