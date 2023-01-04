@@ -1,8 +1,21 @@
 import { divBg, workPage } from "../Components/cssBundled";
 import { IonIcon } from "@ionic/react";
-import { cashOutline, calculatorOutline, shirtOutline, starOutline, fileTrayStackedOutline, callOutline, mailOutline } from "ionicons/icons";
+import { cashOutline, calculatorOutline, shirtOutline, starOutline, fileTrayStackedOutline, callOutline, mailOutline, imageOutline } from "ionicons/icons";
+import { useState } from "react";
 
 const FreeAd = () => {
+  const [formData,setFormData] = useState({
+    name:"",
+    price:0,
+    units:0,
+    condition:"",
+    category:"",
+    phone:"",
+    email:"",
+    description:""
+  })
+
+  const [formImage,setFormImage] = useState<any>();
   const bg: any = divBg("https://ngratesc.sirv.com/Aurora/freeAd.jpg");
 
   const submitForm=(e:any)=>{
@@ -25,6 +38,18 @@ const FreeAd = () => {
                     placeholder="Item/Product Name"
                   />
                   <button type="button" className="btn btnPrimary"><IonIcon icon={shirtOutline}/></button>
+                    </div>
+                  
+                </div>
+                <div className="col-sm">
+                    <div className="input-group mb-3">
+                    <input
+                    type="file"
+                    accept="image/*"
+                    className="form-control"
+                    placeholder="Upload image"
+                  />
+                  <button type="button" className="btn btnPrimary"><IonIcon icon={imageOutline}/></button>
                     </div>
                   
                 </div>
