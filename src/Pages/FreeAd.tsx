@@ -4,13 +4,18 @@ import { cashOutline, calculatorOutline, shirtOutline, starOutline, fileTrayStac
 
 const FreeAd = () => {
   const bg: any = divBg("https://ngratesc.sirv.com/Aurora/freeAd.jpg");
+
+  const submitForm=(e:any)=>{
+    e.preventDefault();
+    
+  }
   return (
     <div style={bg}>
       <div className=" page row d-flex justify-contnet-center flex-row align-items-center">
         <div className="col-sm">
           <h1 className="display-1 gradText"><b>Post Your Free Ad</b></h1>
           <div>
-            <form>
+            <form onSubmit={(e)=>submitForm(e)}>
               <div className="row">
                 <div className="col-sm">
                     <div className="input-group mb-3">
@@ -52,6 +57,7 @@ const FreeAd = () => {
                             <option>Used - good condtion</option>
                             <option>Used - functioning okay</option>
                             <option>Old - functioning</option>
+                            <option>Not working</option>
                         </select>
                         <button type="button" className="btn btnPrimary">
                             <IonIcon icon={starOutline}/>

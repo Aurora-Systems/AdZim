@@ -24,7 +24,7 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="page">
+        <div className="page m-5">
           <div className="container row d-flex align-items-center text-center ">
             <div className="col-sm">
               <img src={logo} className="Sirv" />
@@ -43,11 +43,12 @@ const Home = () => {
             </div>
           </div>
         </div>
-        <div className="page container text-center">
+        <div className="page m-5 text-center">
           <div>
             <h1 className="display-2">How It Works</h1>
           </div>
-          <div className="row d-flex flex -row justify-content-center align-items-center">
+          <br/>
+          <div className="row">
                 <div className="col-sm">
                 <img
                     className="Sirv"
@@ -81,6 +82,7 @@ const Home = () => {
                 </p>
                 </div>
           </div>
+
           <div className="text-center">
           <button className="btn btnPrimary">Get Strated</button>
         </div>
