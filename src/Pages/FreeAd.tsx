@@ -3,6 +3,7 @@ import { IonIcon } from "@ionic/react";
 import { cashOutline, calculatorOutline, shirtOutline, starOutline, fileTrayStackedOutline, callOutline, mailOutline, imageOutline } from "ionicons/icons";
 import { useState } from "react";
 import { Card } from "react-bootstrap";
+import placeholder from "../assets/placeholder.jpg"
 
 const FreeAd = () => {
   const [formData,setFormData] = useState({
@@ -16,7 +17,7 @@ const FreeAd = () => {
     description:""
   })
 
-  const [formImage,setFormImage] = useState<any>();
+  const [formImage,setFormImage] = useState<any>(placeholder);
   const bg: any = divBg("https://ngratesc.sirv.com/Aurora/freeAd.jpg");
 
   
@@ -25,6 +26,17 @@ const FreeAd = () => {
     e.preventDefault();
     
   }
+
+  const selectNpreview=(e:any)=>{
+    if(!e.target.files || e.target.files.length === 0){
+      setFormImage(placeholder)
+    }else{
+      const objectUrl = URL.createObjectURL(e.target.files[0])
+      console.log(objectUrl)
+      setFormImage(objectUrl)
+    }
+  }
+
   return (
     <div style={bg}>
       <div className=" page row d-flex justify-contnet-center flex-row align-items-center">
@@ -39,6 +51,7 @@ const FreeAd = () => {
                     type="text"
                     className="form-control"
                     placeholder="Item/Product Name"
+                    onChange={(e)=>setFormData({...formData, name:e.target.value})}
                   />
                   <button type="button" className="btn btnPrimary"><IonIcon icon={shirtOutline}/></button>
                     </div>
@@ -51,7 +64,7 @@ const FreeAd = () => {
                     accept="image/*"
                     className="form-control"
                     placeholder="Upload image"
-                    onChange={(e)=>{setFormImage(e.target.value);console.log(formImage)}}
+                    onChange={(e:any)=>{selectNpreview(e)}}
                   />
                   <button type="button" className="btn btnPrimary"><IonIcon icon={imageOutline}/></button>
                     </div>
@@ -62,8 +75,10 @@ const FreeAd = () => {
                 <div className="col-sm">
                   <div className="input-group mb-3">
                     <input
+                      type="number"
                       className="form-control "
                       placeholder="Price per unit"
+                      onChange={(e)=>setFormData({...formData, price:e.target.value})}
                     />
                     <button className="btn btnPrimary">
                       <IonIcon icon={cashOutline} color="#fff" />
@@ -72,7 +87,7 @@ const FreeAd = () => {
                 </div>
                 <div className="col-sm">
                     <div className="input-group mb-3">
-                        <input  className="form-control" placeholder="Total Units Available?"/>
+                        <input type="number"  className="form-control" placeholder="Total Units Available?" onChange={(e)=>setFormData({...formData, units:e.target.value})}/>
                         <button type="button" className="btn btnPrimary"><IonIcon icon={calculatorOutline}/></button>
                     </div>
                 </div>
@@ -80,13 +95,13 @@ const FreeAd = () => {
               <div className="row">
                 <div className="col-sm">
                     <div className="input-group mb-3">
-                        <select className="form-control">
+                        <select className="form-control" onChange={(e)=>setFormData({...formData, condition:e.target.value})}>
                             <option disabled>Condition</option>
-                            <option>Brand new</option>
-                            <option>Used - good condtion</option>
-                            <option>Used - functioning okay</option>
-                            <option>Old - functioning</option>
-                            <option>Not working</option>
+                            <option value="Brand New">Brand new</option>
+                            <option value="Used - Good Condition">Used - good condtion</option>
+                            <option value="Used Functioning Okay">Used - functioning okay</option>
+                            <option value="Old - Functioning">Old - functioning</option>
+                            <option value="Not working">Not working</option>
                         </select>
                         <button type="button" className="btn btnPrimary">
                             <IonIcon icon={starOutline}/>
@@ -95,7 +110,7 @@ const FreeAd = () => {
                 </div>
                 <div className="col-sm">
                     <div className="input-group mb-3">
-                        <select className="form-control">
+                        <select className="form-control" onChange={(e)=>setFormData({...formData, category:e.target.value})}>
                             <option disabled>Category</option>
                             <option>Electronics</option>
                             <option>Clothing</option>
@@ -111,21 +126,21 @@ const FreeAd = () => {
               <div className="row">
                 <div className="col-sm">
                     <div className="input-group mb-3">
-                        <input type="tel" className="form-control" placeholder="Whatsapp / Phone Number"/>
+                        <input type="tel" className="form-control" placeholder="Whatsapp / Phone Number" onChange={(e)=>setFormData({...formData, phone:e.target.value})}/>
                         <button type="button" className="btn btnPrimary" ><IonIcon icon={callOutline}/></button>
                     </div>
                 </div>
-                <div className="col-sm">
+                {/* <div className="col-sm">
                     <div className="input-group mb-3">
                     <input type="email" className="form-control" placeholder="Email"/>
                         <button type="button" className="btn btnPrimary" ><IonIcon icon={mailOutline}/></button>
                      </div>
-                </div>
+                </div> */}
 
               </div>
               <div className="row">
                 <div className="col-sm mb-3">
-                <textarea className="form-control" placeholder="Description"></textarea>
+                <textarea className="form-control" placeholder="Description" onChange={(e)=>setFormData({...formData, description:e.target.value})}></textarea>
 
                 </div>
               </div>
@@ -135,21 +150,33 @@ const FreeAd = () => {
         </div>
         <div className="col-sm">
           <div>
-                      <h1 className="display-1">Preview Item</h1>
+                      <h1 className="display-1 gradText"><b>Preview Ad</b></h1>
 
           </div>
           <div>
-            <Card>
+            <Card style={{width:'18rem'}}>
               <Card.Img variant="top" src={formImage}/>
               <Card.Body>
-                <Card.Title>{formData.name}</Card.Title>
+                <Card.Title><b>{formData.name}</b></Card.Title>
                 <Card.Text>
-                  <h3><b>Price: {formData.price}</b></h3>
-                  <p> Condition: {formData.condition}</p>
-                  <p> Units Available: {formData.units}</p>
-                  <p>{formData.description}</p>
+                  <div className="d-flex justify-content-between">
+                    <p>Price</p>
+                    <p className="text-primary"><b>${formData.price}</b></p>
+                  </div>
+                  <div className="d-flex justify-content-between">
+                    <p>Condition</p>
+                    <p className="text-primary">{formData.condition}</p>
+                  </div>
+                  <div className="d-flex justify-content-between">
+                    <p>{formData.description}</p>
+                  </div>
+                  <div className="d-flex justify-content-between">
+                    <p>Contact</p>
+                    <p className="text-primary"><b>{formData.phone}</b></p>
+                  </div>
                 </Card.Text>
                 <button className="btn btnPrimary">Post Ad</button>
+                
               </Card.Body>
             </Card>
           </div>
