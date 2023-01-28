@@ -2,6 +2,7 @@ import { divBg, workPage } from "../Components/cssBundled";
 import { IonIcon } from "@ionic/react";
 import { cashOutline, calculatorOutline, shirtOutline, starOutline, fileTrayStackedOutline, callOutline, mailOutline, imageOutline } from "ionicons/icons";
 import { useState } from "react";
+import { Card } from "react-bootstrap";
 
 const FreeAd = () => {
   const [formData,setFormData] = useState({
@@ -17,6 +18,8 @@ const FreeAd = () => {
 
   const [formImage,setFormImage] = useState<any>();
   const bg: any = divBg("https://ngratesc.sirv.com/Aurora/freeAd.jpg");
+
+  
 
   const submitForm=(e:any)=>{
     e.preventDefault();
@@ -48,6 +51,7 @@ const FreeAd = () => {
                     accept="image/*"
                     className="form-control"
                     placeholder="Upload image"
+                    onChange={(e)=>{setFormImage(e.target.value);console.log(formImage)}}
                   />
                   <button type="button" className="btn btnPrimary"><IonIcon icon={imageOutline}/></button>
                     </div>
@@ -127,6 +131,27 @@ const FreeAd = () => {
               </div>
               <button type="submit" className="btn btnPrimary">Lets Go!</button>
             </form>
+          </div>
+        </div>
+        <div className="col-sm">
+          <div>
+                      <h1 className="display-1">Preview Item</h1>
+
+          </div>
+          <div>
+            <Card>
+              <Card.Img variant="top" src={formImage}/>
+              <Card.Body>
+                <Card.Title>{formData.name}</Card.Title>
+                <Card.Text>
+                  <h3><b>Price: {formData.price}</b></h3>
+                  <p> Condition: {formData.condition}</p>
+                  <p> Units Available: {formData.units}</p>
+                  <p>{formData.description}</p>
+                </Card.Text>
+                <button className="btn btnPrimary">Post Ad</button>
+              </Card.Body>
+            </Card>
           </div>
         </div>
       </div>
