@@ -1,19 +1,22 @@
-import { divBg, workPage } from "../Components/cssBundled";
+import { divBg, } from "../Components/cssBundled";
 import { IonIcon } from "@ionic/react";
 import { cashOutline, calculatorOutline, shirtOutline, starOutline, fileTrayStackedOutline, callOutline, mailOutline, imageOutline } from "ionicons/icons";
 import { useState } from "react";
 import placeholder from "../assets/placeholder.jpg"
+import { useNavigate } from "react-router-dom";
 
 const FreeAd = () => {
+  const navigate = useNavigate()
   const [formData, setFormData] = useState({
     name: "",
     price: 0,
     units: 0,
-    condition: "",
-    category: "",
+    condition: "Brand New",
+    category: "Electronics",
     phone: "",
     email: "",
-    description: ""
+    description: "",
+    img:""
   })
   const [showForms, setShowForms] = useState({
     edit: false,
@@ -28,7 +31,9 @@ const FreeAd = () => {
 
   const submitForm = (e: any) => {
     e.preventDefault();
-    setShowForms({...showForms,edit:true,preview:false})
+    navigate("/previewAd")
+    console.log(formData)
+    // setShowForms({ ...showForms, edit: true, preview: false })
 
   }
 
@@ -37,7 +42,8 @@ const FreeAd = () => {
       setFormImage(placeholder)
     } else {
       const objectUrl = URL.createObjectURL(e.target.files[0])
-      console.log(objectUrl)
+      setFormData({...formData,img:objectUrl})
+      // console.log(objectUrl)
       setFormImage(objectUrl)
     }
   }
@@ -45,7 +51,7 @@ const FreeAd = () => {
   return (
     <div style={bg}>
       <div className=" page row d-flex justify-contnet-center flex-row align-items-center">
-        <div className="col-sm" hidden={showForms.edit}>
+        <div className="col-sm" >
           <h1 className="display-1 gradText"><b>Post Your Free Ad</b></h1>
           <div>
             <form onSubmit={(e) => submitForm(e)}>
@@ -101,7 +107,7 @@ const FreeAd = () => {
                   <div className="input-group mb-3">
                     <select className="form-control" required onChange={(e) => setFormData({ ...formData, condition: e.target.value })}>
                       {/* <option disabled selected>Condition</option> */}
-                      <option selected value="Brand New">Brand new</option>
+                      <option defaultValue="Brand New" value="Brand New">Brand new</option>
                       <option value="Used - Good Condition">Used - good condtion</option>
                       <option value="Used Functioning Okay">Used - functioning okay</option>
                       <option value="Old - Functioning">Old - functioning</option>
@@ -117,7 +123,7 @@ const FreeAd = () => {
                   <div className="input-group mb-3">
                     <select className="form-control" required onChange={(e) => setFormData({ ...formData, category: e.target.value })}>
                       {/* <option disabled>Category</option> */}
-                      <option selected value="Electronics">Electronics</option>
+                      <option defaultValue="Electronics" value="Electronics">Electronics</option>
                       <option value="Clothing">Clothing</option>
                       <option value="Vehicles">Vehicles</option>
                       <option value="tools">Tools</option>
@@ -153,50 +159,9 @@ const FreeAd = () => {
             </form>
           </div>
         </div>
-        <div className="col-sm" hidden={showForms.preview}>
-          <div>
-            <h1 className="display-1 gradText"><b>Preview Ad</b></h1>
-
-          </div>
-          <div>
-            <div >
-              <img className="img-thumbnail" src={formImage} />
-              <div>
-                <div><b>{formData.name}</b></div>
-                <div>
-                  <div className="d-flex justify-content-between">
-                    <p>Price</p>
-                    <p className="text-primary"><b>${formData.price}</b></p>
-                  </div>
-                  <div className="d-flex justify-content-between">
-                    <p>Units Available</p>
-                    <p className="text-primary"><b>{formData.units}</b></p>
-                  </div>
-                  <div className="d-flex justify-content-between">
-                    <p>Condition</p>
-                    <p className="text-primary"><b>{formData.condition}</b></p>
-                  </div>
-                  <div className="d-flex justify-content-between">
-                    <p>Category</p>
-                    <p className="text-primary"><b>{formData.category}</b></p>
-                  </div>
-                  <div className="d-flex justify-content-between">
-                    <p>Contact</p>
-                    <p className="text-primary"><b>{formData.phone}</b></p>
-                  </div>
-                  <div className="d-flex justify-content-between">
-                    <p>{formData.description}</p>
-                  </div>
-
-                </div>
-                <button className="btn btnPrimary">Post Ad</button>
-
-              </div>
-            </div>
-          </div>
+       
         </div>
       </div>
-    </div>
   );
 };
 
