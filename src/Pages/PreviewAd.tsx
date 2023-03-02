@@ -1,20 +1,29 @@
 import { FC } from "react";
 import { useLocation } from "react-router-dom";
-
+import { db } from "../init/firebase.config";
+import { addDoc, collection } from "firebase/firestore";
 const PreviewAd:FC=()=>{
-    const formData =useLocation().state;
-
+    const formData =useLocation().state.formData;
+    
+    const FormSubmission=async(e:any)=>{
+      e.preventDefault();
+      addDoc(collection(db,"store"),formData).then(res=>{
+        console.log(res.id)
+      }).catch(err=>{
+        console.log(err)
+      })
+    }
     return(
-        <div className="col-sm " >
+        <div className="container" >
           <div>
             <h1 className="display-1 gradText"><b>Preview Ad</b></h1>
           </div>
           <div className="row container bg-light p-1 rounded ">
             <div className="col-sm ">
-             <img className="img-fluid rounded" src={formData.formImage} />
+             <img className="img-fluid rounded" src={formData.img} />
             </div>
             <div className="col-sm ">
-              <div>
+              <form onSubmit={(e)=>FormSubmission(e)}>
               <div><b>{formData.name}</b></div>
                   <div className="d-flex justify-content-between">
                     <p>Price</p>
@@ -39,10 +48,17 @@ const PreviewAd:FC=()=>{
                   <div className="d-flex justify-content-between">
                     <p>{formData.description}</p>
                   </div>
+                  <div className="d-flex justify-content-between">
+                    <div className="mb-2">
+                      <input type="checkbox" required/>
+                    <span> You agree to our <a href="">terms and conditions</a></span>
+                    </div>
+                    
+                  </div>
                   <div>
                     <button className="btn btnPrimary">Post Ad</button>
                   </div>
-              </div>    
+              </form>    
             </div>
         </div>
         </div>

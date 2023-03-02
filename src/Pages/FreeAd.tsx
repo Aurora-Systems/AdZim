@@ -31,7 +31,7 @@ const FreeAd = () => {
 
   const submitForm = (e: any) => {
     e.preventDefault();
-    navigate("/previewAd")
+    navigate("/previewAd", {state:{formData}})
     console.log(formData)
     // setShowForms({ ...showForms, edit: true, preview: false })
 
