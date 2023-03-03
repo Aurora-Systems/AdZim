@@ -22,6 +22,7 @@ import "@ionic/react/css/text-transformation.css";
 import "@ionic/react/css/flex-utils.css";
 import "@ionic/react/css/display.css";
 import PreviewAd from './Pages/PreviewAd';
+import Ads from './Pages/Ads';
 
 
 
@@ -33,6 +34,7 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     <Routes>
       <Route path="/" element={<Home/>}/>
       <Route path="freeAd" element={<FreeAd/>}/>
+      <Route path="ads/"element={<Ads/>}/>
       <Route path="previewAd" element={<PreviewAd/>}/>
     </Routes>
    </BrowserRouter>

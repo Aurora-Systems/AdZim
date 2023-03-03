@@ -7,8 +7,8 @@ import { useNavigate } from "react-router-dom";
 
 interface uploadData{
     name: string,
-    price: number,
-    units: number,
+    price: any,
+    units: any,
     condition: string,
     category: string,
     phone: string,
@@ -89,7 +89,7 @@ const FreeAd = () => {
               <div className="row">
                 <div className="col-sm">
                   <div className="input-group mb-3">
-                    <input type="number" className="form-control " placeholder="Price per unit" onChange={(e) => setFormData({ ...formData, price: e.target.value })} required />
+                    <input type="text" className="form-control " placeholder="Price per unit"  onChange={(e) => setFormData({ ...formData, price: e.target.value })} required />
                     <button className="btn btnPrimary">
                       <IonIcon icon={cashOutline} color="#fff" />
                     </button>
@@ -97,7 +97,7 @@ const FreeAd = () => {
                 </div>
                 <div className="col-sm">
                   <div className="input-group mb-3">
-                    <input type="number" required className="form-control" placeholder="Total Units Available?" onChange={(e) => setFormData({ ...formData, units: e.target.value })} />
+                    <input type="number" required className="form-control" placeholder="Total Units Available?"  onChange={(e) => setFormData({ ...formData, units: e.target.value })} />
                     <button type="button" className="btn btnPrimary"><IonIcon icon={calculatorOutline} /></button>
                   </div>
                 </div>

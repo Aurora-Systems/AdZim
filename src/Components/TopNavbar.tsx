@@ -14,11 +14,11 @@ const TopNavbar: FC = () => {
                     <Navbar.Collapse id="responsive-navbar-nav" className="justify-content-end">
                         <Nav className="me-auto ">
                             <Nav.Link className="linkBox" href="/">Home</Nav.Link>
-                            <Nav.Link className="linkBox" href="#link">Electronics</Nav.Link>
-                            <Nav.Link className="linkBox" href="#link">Clothing</Nav.Link>
-                            <Nav.Link className="linkBox" href="#link">Vehicles</Nav.Link>
-                            <Nav.Link className="linkBox" href="#link">Tools</Nav.Link>
-                            <Nav.Link className="linkBox" href="#link">Other</Nav.Link>
+                            <Nav.Link className="linkBox" href="/ads">Electronics</Nav.Link>
+                            <Nav.Link className="linkBox" href="/ads">Clothing</Nav.Link>
+                            <Nav.Link className="linkBox" href="/ads">Vehicles</Nav.Link>
+                            <Nav.Link className="linkBox" href="/ads">Tools</Nav.Link>
+                            <Nav.Link className="linkBox" href="/ads">Other</Nav.Link>
                             <Nav.Link className="linkBox" href="/freeAd"><b>FreeAds</b></Nav.Link>
                         </Nav>
                     </Navbar.Collapse>
