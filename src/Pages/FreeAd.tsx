@@ -5,18 +5,28 @@ import { useState } from "react";
 import placeholder from "../assets/placeholder.jpg"
 import { useNavigate } from "react-router-dom";
 
+interface uploadData{
+    name: string,
+    price: number,
+    units: number,
+    condition: string,
+    category: string,
+    phone: string,
+    description: string,
+    img:any
+}
+
 const FreeAd = () => {
   const navigate = useNavigate()
-  const [formData, setFormData] = useState({
+  const [formData, setFormData] = useState<uploadData>({
     name: "",
     price: 0,
     units: 0,
     condition: "Brand New",
     category: "Electronics",
     phone: "",
-    email: "",
     description: "",
-    img:""
+    img:placeholder
   })
   const [showForms, setShowForms] = useState({
     edit: false,
@@ -37,16 +47,7 @@ const FreeAd = () => {
 
   }
 
-  const selectNpreview = (e: any) => {
-    if (!e.target.files || e.target.files.length === 0) {
-      setFormImage(placeholder)
-    } else {
-      const objectUrl = URL.createObjectURL(e.target.files[0])
-      setFormData({...formData,img:objectUrl})
-      // console.log(objectUrl)
-      setFormImage(objectUrl)
-    }
-  }
+ 
 
   return (
     <div style={bg}>
@@ -76,7 +77,8 @@ const FreeAd = () => {
                       accept="image/*"
                       className="form-control"
                       placeholder="Upload image"
-                      onChange={(e: any) => { selectNpreview(e) }}
+                      required
+                      onChange={(e: any) => { setFormData({...formData, img:e.target.files[0]})}}
 
                     />
                     <button type="button" className="btn btnPrimary"><IonIcon icon={imageOutline} /></button>
