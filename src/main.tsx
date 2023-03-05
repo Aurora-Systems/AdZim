@@ -27,7 +27,7 @@ import Ads from './Pages/Ads';
 
 
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
-  <React.StrictMode>
+  // <React.StrictMode>
     <div className='container-fluid m-0 p-0'>
     <TopNavbar/>
    <BrowserRouter>
@@ -39,5 +39,5 @@ ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
     </Routes>
    </BrowserRouter>
    </div>
-  </React.StrictMode>,
+  ,
 )

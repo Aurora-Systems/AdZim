@@ -2,7 +2,7 @@ import { FC, useState,useEffect } from "react";
 import { useLocation } from "react-router-dom";
 import { db, storage } from "../init/firebase.config";
 import { addDoc, collection } from "firebase/firestore";
-import  {ref,uploadBytes} from "firebase/storage"
+import  {getDownloadURL, ref,uploadBytes} from "firebase/storage"
 import {v4} from "uuid"
 import loading from "../assets/loading.png"
 import placeholder from "../assets/placeholder.jpg"
@@ -29,9 +29,10 @@ const PreviewAd:FC=()=>{
     </div>})
       const imageRef = ref(storage,`adimage/${v4()}`)
       uploadBytes(imageRef,formData.img).then(res=>{
-        console.log(res.metadata)
-        addDoc(collection(db,"store"),{...formData, img:res.metadata.fullPath}).then(res=>{
-          setButtonState({...buttonState,disabled:true,text:"Posted! 😉" })
+        return getDownloadURL(res.ref)
+        }).then(imageURL=>{
+          addDoc(collection(db,"store"),{...formData, img:imageURL}).then(res=>{
+            setButtonState({...buttonState,disabled:true,text:"Posted! 😉" })
         }).catch(err=>{
           setButtonState({...buttonState,disabled:false,text:"Try again 😢" })
         })
