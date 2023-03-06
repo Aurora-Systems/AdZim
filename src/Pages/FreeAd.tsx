@@ -5,7 +5,7 @@ import { useState } from "react";
 import placeholder from "../assets/placeholder.jpg"
 import { useNavigate } from "react-router-dom";
 
-interface uploadData{
+export interface uploadData{
     name: string,
     price: any,
     units: any,
