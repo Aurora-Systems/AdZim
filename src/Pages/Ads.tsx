@@ -1,5 +1,5 @@
 import { FC, useState,useEffect } from "react"
-import { collection,getDocs,query } from "firebase/firestore"
+import { collection,getDocs,query, where } from "firebase/firestore"
 import { db } from "../init/firebase.config"
 import placeholder from "../assets/placeholder.jpg"
 import { IonIcon } from "@ionic/react"
@@ -19,8 +19,10 @@ const Ads:FC=()=>{
     description: "",
     img:placeholder
     })
+    const [searchInfo,setSearchInfo]= useState<string>("");
+    const storeDb = collection(db,"store")
     const getAds=async()=>{
-        const q = query(collection(db, "store"));
+        const q = query(storeDb);
         getDocs(q).then(res=>{
             const data = res.docs.map((doc)=>({...doc.data()}))
             setAds(data)
@@ -36,15 +38,30 @@ const Details=(data:any,show:boolean)=>{
     setView(show)
 }
 
+const RunSearch=(e:any)=>{
+  e.preventDefault();
+  console.log(searchInfo)
+  const searchQuery = query(storeDb, where("name" ,">=", searchInfo))
+  getDocs(searchQuery).then(res=>{
+    // console.log(res.empty)
+    const data = res.docs.map((doc)=>({...doc.data()}))
+    setAds(data)
+  }).catch(err=>{
+    console.log(err)
+  })
+}
+
     return(
         
         <div className="page m-5 ">
+           <form onSubmit={(e)=>RunSearch(e)}>
             <div className="input-group mb-3 ">
-                <input className="form-control" placeholder="What are you looking ?"/>
-                <button className="btn btnPrimary">
+                <input className="form-control" placeholder="What are you looking ?" value={searchInfo}  onChange={(e)=>setSearchInfo(e.target.value)}/>
+                <button type="submit" className="btn btnPrimary">
                 <IonIcon icon={search} color="#fff" />
               </button>
             </div>
+             </form>  
             <div className="d-flex flex-row flex-wrap justify-content-center">
             {
                 ads.map((item:any,index:any)=>{
