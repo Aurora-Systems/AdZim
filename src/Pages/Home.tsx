@@ -39,7 +39,7 @@ const Home = () => {
                 . No signup required, no future payments. Post it here once,
                 spread the word everywhere!
               </p>
-              <button className="btn btnPrimary">Post Free Ad</button>
+              <a href="/freeAd"><button className="btn btnPrimary">Post Free Ad</button></a>
             </div>
           </div>
         </div>
