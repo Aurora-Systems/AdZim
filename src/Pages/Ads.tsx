@@ -43,11 +43,11 @@ const RunSearch=(e:any)=>{
   console.log(searchInfo)
   const searchQuery = query(storeDb, where("name" ,">=", searchInfo))
   getDocs(searchQuery).then(res=>{
-    // console.log(res.empty)
+   
     const data = res.docs.map((doc)=>({...doc.data()}))
     setAds(data)
   }).catch(err=>{
-    console.log(err)
+    setAds([])
   })
 }
 
@@ -63,10 +63,11 @@ const RunSearch=(e:any)=>{
             </div>
              </form>  
             <div className="d-flex flex-row flex-wrap justify-content-center">
-            {
+              {ads.length==0?<h1>Nothing available 😢</h1>:
+            
+
                 ads.map((item:any,index:any)=>{
-                   
-                    return(
+                       return(
                         <div key={index} className="m-3">
                             <div  className="card shadow-lg cardEffects" style={{width:"18rem",}}>
                                 <img   src={item.img || placeholder} loading="lazy" alt=""  className="card-img-top cardImg" />
@@ -85,6 +86,7 @@ const RunSearch=(e:any)=>{
                            
                         </div>
                     )
+                  
                 })
             }
              <div className="shadow-lg col-sm details" hidden={view}>
