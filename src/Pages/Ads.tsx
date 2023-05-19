@@ -8,7 +8,7 @@ import { useLocation } from "react-router-dom"
 
 
 const Ads:FC=()=>{
-    const previousState = useLocation().state
+    const previousState = useLocation()
     const [ads,setAds]=useState<any>([])
     const [view,setView]=useState<boolean>(true)
     const [item,setItem]=useState<any>({
@@ -51,8 +51,8 @@ const RunSearch=(e?:any)=>{
 }
 
 useEffect(()=>{
-  if(previousState!==null){
-      setSearchInfo(previousState.searchText)
+  if(previousState.state.searchText){
+      setSearchInfo(previousState.state.searchText)
       RunSearch()
   }else{
     getAds()

@@ -6,16 +6,12 @@ import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
+  const navigate = useNavigate()
   const bg: any = divBg("https://ngratesc.sirv.com/Aurora/homeAdZim.jpg");
   const [searchText,setSearchText] = useState<string>("");
   const handleSearch=(e:any)=>{
       e.preventDefault()
-      console.log("in function")
-      const navigate = useNavigate()
-      navigate("ads", {state:{
-        searchText
-      }})
-
+      navigate("ads/", {state:searchText})
   }
   return (
     <div className="container-fluid m-0 p-0">
