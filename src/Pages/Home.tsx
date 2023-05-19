@@ -2,9 +2,22 @@ import { IonIcon } from "@ionic/react";
 import { search } from "ionicons/icons";
 import logo from "../assets/logo.png";
 import { divBg, workPage } from "../Components/cssBundled";
+import { useState } from "react";
+import { collection } from "firebase/firestore";
+import { db } from "../init/firebase.config";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const bg: any = divBg("https://ngratesc.sirv.com/Aurora/homeAdZim.jpg");
+  const [searchText,setSearchText] = useState<string>("");
+  const handleSearch=(e:FormDataEvent)=>{
+      e.preventDefault()
+      const navigate = useNavigate()
+      navigate("ads/", {state:{
+        searchText
+      }})
+
+  }
   return (
     <div className="container-fluid m-0 p-0">
       <div className={workPage}>
@@ -12,17 +25,21 @@ const Home = () => {
           className="page  d-flex justify-content-center align-items-center sirv"
           style={bg}
         >
+          <form onSubmit={(e:any)=>handleSearch(e)}>
           <div className="text-center">
             <div className="input-group mb-3 searchbar">
               <input
                 className="form-control "
-                placeholder="What are you looking for?"
+                placeholder="What are you looking for? "
+                required={true}
+                onChange={(e)=>setSearchText(e.target.value)}
               />
               <button className="btn btnPrimary">
                 <IonIcon icon={search} color="#fff" />
               </button>
             </div>
           </div>
+          </form>
         </div>
         <div className="page m-5">
           <div className="container row d-flex align-items-center text-center ">

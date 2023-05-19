@@ -4,9 +4,11 @@ import { db } from "../init/firebase.config"
 import placeholder from "../assets/placeholder.jpg"
 import { IonIcon } from "@ionic/react"
 import { search } from "ionicons/icons"
+import { useLocation } from "react-router-dom"
 
 
 const Ads:FC=()=>{
+    const previousState = useLocation().state
     const [ads,setAds]=useState<any>([])
     const [view,setView]=useState<boolean>(true)
     const [item,setItem]=useState<any>({
@@ -29,8 +31,13 @@ const Ads:FC=()=>{
         })
     }
     useEffect(()=>{
-       
+      if(previousState!==null){
+          setSearchInfo(previousState.searchText)
+          RunSearch()
+      }else{
         getAds()
+      }
+    
 },[])
 
 const Details=(data:any,show:boolean)=>{
@@ -38,7 +45,7 @@ const Details=(data:any,show:boolean)=>{
     setView(show)
 }
 
-const RunSearch=(e:any)=>{
+const RunSearch=(e?:any)=>{
   e.preventDefault();
   console.log(searchInfo)
   const searchQuery = query(storeDb, where("name" ,">=", searchInfo))
