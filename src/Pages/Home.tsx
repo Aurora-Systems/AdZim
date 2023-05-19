@@ -3,17 +3,16 @@ import { search } from "ionicons/icons";
 import logo from "../assets/logo.png";
 import { divBg, workPage } from "../Components/cssBundled";
 import { useState } from "react";
-import { collection } from "firebase/firestore";
-import { db } from "../init/firebase.config";
 import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   const bg: any = divBg("https://ngratesc.sirv.com/Aurora/homeAdZim.jpg");
   const [searchText,setSearchText] = useState<string>("");
-  const handleSearch=(e:FormDataEvent)=>{
+  const handleSearch=(e:any)=>{
       e.preventDefault()
+      console.log("in function")
       const navigate = useNavigate()
-      navigate("ads/", {state:{
+      navigate("ads", {state:{
         searchText
       }})
 
@@ -34,7 +33,7 @@ const Home = () => {
                 required={true}
                 onChange={(e)=>setSearchText(e.target.value)}
               />
-              <button className="btn btnPrimary">
+              <button type="submit" className="btn btnPrimary">
                 <IonIcon icon={search} color="#fff" />
               </button>
             </div>

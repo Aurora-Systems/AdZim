@@ -30,15 +30,7 @@ const Ads:FC=()=>{
             setAds(data)
         })
     }
-    useEffect(()=>{
-      if(previousState!==null){
-          setSearchInfo(previousState.searchText)
-          RunSearch()
-      }else{
-        getAds()
-      }
-    
-},[])
+   
 
 const Details=(data:any,show:boolean)=>{
     setItem(data)
@@ -57,6 +49,16 @@ const RunSearch=(e?:any)=>{
     setAds([])
   })
 }
+
+useEffect(()=>{
+  if(previousState!==null){
+      setSearchInfo(previousState.searchText)
+      RunSearch()
+  }else{
+    getAds()
+  }
+
+},[])
 
     return(
         
