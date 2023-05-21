@@ -38,7 +38,7 @@ const Details=(data:any,show:boolean)=>{
 }
 
 const RunSearch=(e?:any)=>{
-  e.preventDefault();
+  e?e.preventDefault():console.log("no event")
   console.log(searchInfo)
   const searchQuery = query(storeDb, where("name" ,">=", searchInfo))
   getDocs(searchQuery).then(res=>{
@@ -51,9 +51,14 @@ const RunSearch=(e?:any)=>{
 }
 
 useEffect(()=>{
-  if(previousState.state.searchText){
-      setSearchInfo(previousState.state.searchText)
-      RunSearch()
+  if(previousState.state){
+     const searchSent = query(storeDb, where("name", ">=", previousState.state))
+     getDocs(searchSent).then(res=>{
+      const data = res.docs.map((doc)=>({...doc.data()}))
+      setAds(data)
+    }).catch(err=>{
+      setAds([])
+    })
   }else{
     getAds()
   }
