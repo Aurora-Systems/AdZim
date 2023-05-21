@@ -11,7 +11,7 @@ const Home = () => {
   const [searchText,setSearchText] = useState<string>("");
   const handleSearch=(e:any)=>{
       e.preventDefault()
-      navigate("ads/", {state:searchText})
+      navigate("ads/", {state:{name:searchText}})
   }
   return (
     <div className="container-fluid m-0 p-0">

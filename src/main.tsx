@@ -29,8 +29,9 @@ import Ads from './Pages/Ads';
 ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
   
     <div className='container-fluid m-0 p-0'>
-    <TopNavbar/>
+   
    <BrowserRouter>
+   <TopNavbar/>
     <Routes>
       <Route path="/" element={<Home/>}/>
       <Route path="freeAd" element={<FreeAd/>}/>

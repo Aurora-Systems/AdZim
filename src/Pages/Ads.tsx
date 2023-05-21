@@ -51,14 +51,19 @@ const RunSearch=(e?:any)=>{
 }
 
 useEffect(()=>{
-  if(previousState.state){
-     const searchSent = query(storeDb, where("name", ">=", previousState.state))
-     getDocs(searchSent).then(res=>{
-      const data = res.docs.map((doc)=>({...doc.data()}))
-      setAds(data)
-    }).catch(err=>{
-      setAds([])
-    })
+  const RunBefore=(parameter:string, value:string)=>{
+    const searchSent = query(storeDb, where(parameter, ">=", value))
+    getDocs(searchSent).then(res=>{
+     const data = res.docs.map((doc)=>({...doc.data()}))
+     setAds(data)
+   }).catch(err=>{
+     setAds([])
+   })
+  }
+  if(previousState.state.name){
+     RunBefore("name",previousState.state.name)
+  }else if(previousState.state.category){
+    RunBefore("category",previousState.state.category)
   }else{
     getAds()
   }
