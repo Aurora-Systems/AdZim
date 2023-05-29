@@ -50,10 +50,11 @@ const RunSearch=(e?:any)=>{
   })
 }
 
-useEffect(()=>{
+useEffect(()=>{ 
   const RunBefore=(parameter:string, value:string)=>{
     const searchSent = query(storeDb, where(parameter, ">=", value))
     getDocs(searchSent).then(res=>{
+      console.log(res)
      const data = res.docs.map((doc)=>({...doc.data()}))
      setAds(data)
    }).catch(err=>{
@@ -68,7 +69,15 @@ useEffect(()=>{
     getAds()
   }
 
-},[])
+},[previousState]) 
+
+  const Nothing=()=>{
+    setTimeout(
+      ()=>{
+    return(
+      <h1>Nothing Found</h1>
+    )},3000)
+  }
 
     return(
         
@@ -82,7 +91,7 @@ useEffect(()=>{
             </div>
              </form>  
             <div className="d-flex flex-row flex-wrap justify-content-center">
-              {ads.length==0?<h1>Nothing available 😢</h1>:
+              {ads.length==0?Nothing():
             
 
                 ads.map((item:any,index:any)=>{
