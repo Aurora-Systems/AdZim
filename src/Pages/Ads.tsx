@@ -51,8 +51,8 @@ const RunSearch=(e?:any)=>{
 }
 
 useEffect(()=>{ 
-  const RunBefore=(parameter:string, value:string)=>{
-    const searchSent = query(storeDb, where(parameter, ">=", value))
+  const RunBefore=(parameter:string, value:string, symbol:any)=>{
+    const searchSent = query(storeDb, where(parameter, symbol, value))
     getDocs(searchSent).then(res=>{
       console.log(res)
      const data = res.docs.map((doc)=>({...doc.data()}))
@@ -62,9 +62,9 @@ useEffect(()=>{
    })
   }
   if(previousState.state.name){
-     RunBefore("name",previousState.state.name)
+     RunBefore("name",previousState.state.name,">=")
   }else if(previousState.state.category){
-    RunBefore("category",previousState.state.category)
+    RunBefore("category",previousState.state.category,"==")
   }else{
     getAds()
   }
