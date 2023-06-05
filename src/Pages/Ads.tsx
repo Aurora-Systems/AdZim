@@ -1,5 +1,5 @@
 import { FC, useState,useEffect } from "react"
-import { collection,getDocs,query, where } from "firebase/firestore"
+import { collection,getDocs,limit,query, where } from "firebase/firestore"
 import { db } from "../init/firebase.config"
 import placeholder from "../assets/placeholder.jpg"
 import { IonIcon } from "@ionic/react"
@@ -52,7 +52,7 @@ const RunSearch=(e?:any)=>{
 
 useEffect(()=>{ 
   const RunBefore=(parameter:string, value:string, symbol:any)=>{
-    const searchSent = query(storeDb, where(parameter, symbol, value))
+    const searchSent = query(storeDb, where(parameter, symbol, value),limit(20))
     getDocs(searchSent).then(res=>{
       console.log(res)
      const data = res.docs.map((doc)=>({...doc.data()}))
@@ -72,11 +72,9 @@ useEffect(()=>{
 },[previousState]) 
 
   const Nothing=()=>{
-    setTimeout(
-      ()=>{
     return(
-      <h1>Nothing Found</h1>
-    )},3000)
+      <h1>Nothing Found 😫</h1>
+    )
   }
 
     return(

@@ -97,7 +97,7 @@ const Home = () => {
           </div>
 
           <div className="text-center">
-          <button className="btn btnPrimary">Get Strated</button>
+          <a href="/freeAd"><button className="btn btnPrimary">Get Started</button></a>
         </div>
         </div>
         
