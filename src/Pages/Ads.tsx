@@ -1,12 +1,14 @@
 import { FC, useState,useEffect } from "react"
-import { collection,getDocs,query } from "firebase/firestore"
+import { collection,getDocs,limit,query, where } from "firebase/firestore"
 import { db } from "../init/firebase.config"
 import placeholder from "../assets/placeholder.jpg"
 import { IonIcon } from "@ionic/react"
 import { search } from "ionicons/icons"
+import { useLocation } from "react-router-dom"
 
 
 const Ads:FC=()=>{
+    const previousState = useLocation()
     const [ads,setAds]=useState<any>([])
     const [view,setView]=useState<boolean>(true)
     const [item,setItem]=useState<any>({
@@ -19,37 +21,79 @@ const Ads:FC=()=>{
     description: "",
     img:placeholder
     })
+    const [searchInfo,setSearchInfo]= useState<string>("");
+    const storeDb = collection(db,"store")
     const getAds=async()=>{
-        const q = query(collection(db, "store"));
+        const q = query(storeDb);
         getDocs(q).then(res=>{
             const data = res.docs.map((doc)=>({...doc.data()}))
             setAds(data)
         })
     }
-    useEffect(()=>{
-       
-        getAds()
-},[])
+   
 
 const Details=(data:any,show:boolean)=>{
     setItem(data)
     setView(show)
 }
 
+const RunSearch=(e?:any)=>{
+  e?e.preventDefault():console.log("no event")
+  console.log(searchInfo)
+  const searchQuery = query(storeDb, where("name" ,">=", searchInfo))
+  getDocs(searchQuery).then(res=>{
+   
+    const data = res.docs.map((doc)=>({...doc.data()}))
+    setAds(data)
+  }).catch(err=>{
+    setAds([])
+  })
+}
+
+useEffect(()=>{ 
+  const RunBefore=(parameter:string, value:string, symbol:any)=>{
+    const searchSent = query(storeDb, where(parameter, symbol, value),limit(20))
+    getDocs(searchSent).then(res=>{
+      console.log(res)
+     const data = res.docs.map((doc)=>({...doc.data()}))
+     setAds(data)
+   }).catch(err=>{
+     setAds([])
+   })
+  }
+  if(previousState.state.name){
+     RunBefore("name",previousState.state.name,">=")
+  }else if(previousState.state.category){
+    RunBefore("category",previousState.state.category,"==")
+  }else{
+    getAds()
+  }
+
+},[previousState]) 
+
+  const Nothing=()=>{
+    return(
+      <h1>Nothing Found 😫</h1>
+    )
+  }
+
     return(
         
         <div className="page m-5 ">
+           <form onSubmit={(e)=>RunSearch(e)}>
             <div className="input-group mb-3 ">
-                <input className="form-control" placeholder="What are you looking ?"/>
-                <button className="btn btnPrimary">
+                <input className="form-control" placeholder="What are you looking ?" value={searchInfo}  onChange={(e)=>setSearchInfo(e.target.value)}/>
+                <button type="submit" className="btn btnPrimary">
                 <IonIcon icon={search} color="#fff" />
               </button>
             </div>
+             </form>  
             <div className="d-flex flex-row flex-wrap justify-content-center">
-            {
+              {ads.length==0?Nothing():
+            
+
                 ads.map((item:any,index:any)=>{
-                   
-                    return(
+                       return(
                         <div key={index} className="m-3">
                             <div  className="card shadow-lg cardEffects" style={{width:"18rem",}}>
                                 <img   src={item.img || placeholder} loading="lazy" alt=""  className="card-img-top cardImg" />
@@ -68,6 +112,7 @@ const Details=(data:any,show:boolean)=>{
                            
                         </div>
                     )
+                  
                 })
             }
              <div className="shadow-lg col-sm details m-5" hidden={view}>

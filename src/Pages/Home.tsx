@@ -2,9 +2,18 @@ import { IonIcon } from "@ionic/react";
 import { search } from "ionicons/icons";
 import logo from "../assets/logo.png";
 import { divBg, workPage } from "../Components/cssBundled";
+import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
-  const bg: any = divBg("https://ngratesc.sirv.com/Aurora/homeAdZim.jpg");
+  console.log("welcome")
+  const navigate = useNavigate()
+ const bg: any = divBg("https://ngratesc.sirv.com/Aurora/homeAdZim.jpg");
+  const [searchText,setSearchText] = useState<string>("");
+  const handleSearch=(e:any)=>{ 
+      e.preventDefault()
+      navigate("ads/", {state:{name:searchText}})
+  }
   return (
     <div className="container-fluid m-0 p-0">
       <div className={workPage}>
@@ -12,17 +21,21 @@ const Home = () => {
           className="page  d-flex justify-content-center align-items-center sirv"
           style={bg}
         >
+          <form onSubmit={(e:any)=>handleSearch(e)}>
           <div className="text-center">
             <div className="input-group mb-3 searchbar">
               <input
                 className="form-control "
-                placeholder="What are you looking for?"
+                placeholder="What are you looking for? "
+                required={true}
+                onChange={(e)=>setSearchText(e.target.value)}
               />
-              <button className="btn btnPrimary">
+              <button type="submit" className="btn btnPrimary">
                 <IonIcon icon={search} color="#fff" />
               </button>
             </div>
           </div>
+          </form>
         </div>
         <div className="page m-5">
           <div className="container row d-flex align-items-center text-center ">
@@ -39,7 +52,7 @@ const Home = () => {
                 . No signup required, no future payments. Post it here once,
                 spread the word everywhere!
               </p>
-              <button className="btn btnPrimary">Post Free Ad</button>
+              <a href="/freeAd"><button className="btn btnPrimary">Post Free Ad</button></a>
             </div>
           </div>
         </div>
@@ -84,7 +97,7 @@ const Home = () => {
           </div>
 
           <div className="text-center">
-          <button className="btn btnPrimary">Get Strated</button>
+          <a href="/freeAd"><button className="btn btnPrimary">Get Started</button></a>
         </div>
         </div>
         
