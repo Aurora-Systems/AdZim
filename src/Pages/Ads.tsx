@@ -70,7 +70,7 @@ const Details=(data:any,show:boolean)=>{
                     )
                 })
             }
-             <div className="shadow-lg col-sm details" hidden={view}>
+             <div className="shadow-lg col-sm details m-5" hidden={view}>
                             <div className="row container bg-light p-1 rounded ">
             <div className="col-sm ">
              <img className="img-fluid rounded" src={item.img} />
